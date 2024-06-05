@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    command: python3 -m flask run --host=0.0.0.0
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - PORT=${PORT:-8000}
+      - FLASK_ENV=production
+      - BASE_URL=${BASE_URL:-http://localhost:8000}
+      - FLAG=${FLAG:-flag{testflag}}
+    volumes:
+      - .:/app:ro
+      - db-data:/tmp
+    tmpfs:
+      - /tmp
+
+volumes:
+  db-data:
